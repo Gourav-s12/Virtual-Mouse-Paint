@@ -3,7 +3,9 @@ opencv-python
 opencv-contrib-python
 mediapipe
 python-time
-autopy
 python-math
 numpy
 PyAutoGUI
+tensorflow
+keras
+# autopy

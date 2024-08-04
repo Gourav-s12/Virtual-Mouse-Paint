@@ -1,13 +1,14 @@
 from tkinter import *
-import autopy
+# import autopy
+import pyautogui as pg
 import sys
 
 #variables
 current_x, current_y = 0,0
 color = 'black'
-scalewidth= 1.255
-scaleheight= 1.271
-widthSc, heightSc = autopy.screen.size()
+scalewidth= 1 # 1.255
+scaleheight= 1 # 1.271
+widthSc, heightSc = pg.size() # autopy.screen.size()
 widthSc= scalewidth * widthSc
 
 #functions
@@ -52,32 +53,33 @@ btn2.place(x=widthSc-150, y=610)
 
 #colors
 def display_pallete():
-    id = canvas.create_rectangle((widthSc-65,70, widthSc - 30,105),fill='black')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('black'))
+    
+    new_id = canvas.create_rectangle((widthSc-65,70, widthSc - 30,105),fill='black')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('black'))
 
-    id = canvas.create_rectangle((widthSc-65,120, widthSc - 30,155),fill='gray')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('gray'))
+    new_id = canvas.create_rectangle((widthSc-65,120, widthSc - 30,155),fill='gray')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('gray'))
 
-    id = canvas.create_rectangle((widthSc-65,170, widthSc - 30,205),fill='#fefefe')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('#fefefe'))
+    new_id = canvas.create_rectangle((widthSc-65,170, widthSc - 30,205),fill='#fefefe')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('#fefefe'))
 
-    id = canvas.create_rectangle((widthSc-65,220, widthSc - 30,255),fill='red')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('red'))
+    new_id = canvas.create_rectangle((widthSc-65,220, widthSc - 30,255),fill='red')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('red'))
 
-    id = canvas.create_rectangle((widthSc-65,270, widthSc - 30,305),fill='orange')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('orange'))
+    new_id = canvas.create_rectangle((widthSc-65,270, widthSc - 30,305),fill='orange')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('orange'))
 
-    id = canvas.create_rectangle((widthSc-65,320, widthSc - 30,355),fill='yellow')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('yellow'))
+    new_id = canvas.create_rectangle((widthSc-65,320, widthSc - 30,355),fill='yellow')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('yellow'))
 
-    id = canvas.create_rectangle((widthSc-65,370, widthSc - 30,405),fill='green')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('green'))
+    new_id = canvas.create_rectangle((widthSc-65,370, widthSc - 30,405),fill='green')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('green'))
 
-    id = canvas.create_rectangle((widthSc-65,420, widthSc - 30,455),fill='blue')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('blue'))
+    new_id = canvas.create_rectangle((widthSc-65,420, widthSc - 30,455),fill='blue')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('blue'))
 
-    id = canvas.create_rectangle((widthSc-65,470, widthSc - 30,505),fill='purple')
-    canvas.tag_bind(id, '<Button-1>', lambda x: show_color('purple'))
+    new_id = canvas.create_rectangle((widthSc-65,470, widthSc - 30,505),fill='purple')
+    canvas.tag_bind(new_id, '<Button-1>', lambda x: show_color('purple'))
 
     
 display_pallete()

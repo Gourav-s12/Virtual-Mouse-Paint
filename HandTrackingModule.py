@@ -3,7 +3,10 @@ import mediapipe as mp
 import time
 import math
 import numpy as np
- 
+from tensorflow import keras
+from keras.models import load_model
+
+custom_model = keras.models.load_model('gesture_model_virtual_mouse')
  
 class handDetector():
     def __init__(self, mode=False, maxHands=2, detectionCon=0.5, trackCon=0.5):
@@ -29,14 +32,29 @@ class handDetector():
                                                self.mpHands.HAND_CONNECTIONS)
  
         return img
+
+    def landmark_to_vector(self, landmarks):
+        vector = []
+        for landmark in landmarks:
+            vector.append(landmark.x)
+            vector.append(landmark.y)
+            vector.append(landmark.z)
+        return vector
  
     def findPosition(self, img, handNo=0, draw=True):
         xList = []
         yList = []
         bbox = []
         self.lmList = []
+        custom_index = 1
         if self.results.multi_hand_landmarks:
             myHand = self.results.multi_hand_landmarks[handNo]
+
+            vector = self.landmark_to_vector(myHand.landmark)
+            new_vector = np.array(vector).reshape(1,63)
+            prediction = custom_model.predict(new_vector)
+            custom_index = np.argmax(prediction)
+
             for id, lm in enumerate(myHand.landmark):
                 # print(id, lm)
                 h, w, c = img.shape
@@ -56,7 +74,7 @@ class handDetector():
                 cv2.rectangle(img, (xmin - 20, ymin - 20), (xmax + 20, ymax + 20),
                               (0, 255, 0), 2)
  
-        return self.lmList, bbox
+        return self.lmList, bbox, custom_index
  
     def fingersUp(self):
         fingers = []

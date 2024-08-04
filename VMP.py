@@ -1,12 +1,13 @@
+# python38 VMP.py 
 import cv2
 import numpy as np
 import HandTrackingModule as htm
-import autopy
+# import autopy
 import time
 import pyautogui
 import printapp as pa
 
-#from autopy.mouse import LEFT_BUTTON, RIGHT_BUTTON
+# from autopy.mouse import LEFT_BUTTON, RIGHT_BUTTON
 
 #veriables
 widthC, heightC =648,488
@@ -21,19 +22,23 @@ downValue = 25
 dragLeft = False
 SSnumber = 0
 
+custom_label=["switch", "none", "screenshot"]
+
 #init
 cap= cv2.VideoCapture(0)
 cap.set(2,widthC)
 cap.set(4,heightC)
 detector = htm.handDetector(maxHands=1)
-widthSc, heightSc = autopy.screen.size()
+widthSc, heightSc = pyautogui.size() # autopy.screen.size()
 pa.window.withdraw()
 
 while True:
     #find hand points
     success, VC = cap.read()
     VC = detector.findHands(VC)
-    lmList, bbox = detector.findPosition(VC)
+    lmList, bbox, custom_index = detector.findPosition(VC)
+
+    pred = custom_label[custom_index]
     
     if len(lmList) != 0:
         # get the tip of the index and middle finger
@@ -61,7 +66,8 @@ while True:
             clocY = plocY + (y1 - plocY) * smoot
 
             # Mouse move
-            autopy.mouse.move(widthSc - clocX,clocY)
+            # autopy.mouse.move(widthSc - clocX,clocY)
+            pyautogui.moveTo(widthSc - clocX,clocY)
 
             # Mouse drag 
             if(pa.window.state() == "withdrawn"): 
@@ -114,14 +120,14 @@ while True:
                 clickTime= -15
 
         # All finger up : Screenshot mode
-        elif fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1 and fingers[0] == 1 and sstime == 0:
+        elif pred=="screenshot" and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1 and fingers[0] == 1 and sstime == 0:
             myScreenshot = pyautogui.screenshot()
             myScreenshot.save("SS" + str(SSnumber) + ".jpg")
             SSnumber += 1
             sstime = -50
 
         # 4 finger up : mouse mode & drawing mode switch
-        elif fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1 and fingers[0] == 0 :
+        elif pred=="switch" and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1 and fingers[0] == 0 :
 
             # getting distance for adjustent fingers
             lengthmr = detector.findDistanceL(12, 16, VC)
@@ -139,6 +145,12 @@ while True:
                     pa.window.withdraw()
 
                 sstime= -50
+
+        # Check for a specific hand sign to terminate the script (e.g., ring finger and little finger up)
+        if fingers[0] == 0 and fingers[1] == 0 and fingers[2] == 0 and fingers[3] == 1 and fingers[4] == 1:
+            print("Ring finger and little finger up detected. Terminating the script.")
+            break  # Terminate the loop
+
                  
     # Frame Rate
     cTime = time.time()
