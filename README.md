@@ -2,7 +2,7 @@
 A hand tracking python script with finger movement &amp; sign, you can control Your mouse And also draw in screen with many colors. 
 
 ## 🛠️ Installation
-1. Install Python 3.8 , newer version would not work
+1. Install Python 3.11 , newer version would not work
    * Go to https://www.python.org/downloads/.
    * This will give you pip as well.
 2. Download this project **Virtual-Mouse-Paint**. 
