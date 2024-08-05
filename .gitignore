@@ -4,3 +4,5 @@ back/*
 __pycache__/*
 trainModel\test.py
 *.zip
+*.pdf
+*.docx
