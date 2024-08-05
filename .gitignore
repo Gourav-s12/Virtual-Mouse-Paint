@@ -2,3 +2,5 @@ SS*.*
 *.webp
 back/*
 __pycache__/*
+trainModel\test.py
+*.zip
